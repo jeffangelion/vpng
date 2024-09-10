@@ -34,18 +34,18 @@ fn parse2_(file_bytes []u8) !PngFile {
 	mut plte := []TrueColor{}
 	for i := 0; i < png.plte.len; i += 3 {
 		plte << TrueColor{
-			red: png.plte[i]
+			red:   png.plte[i]
 			green: png.plte[i + 1]
-			blue: png.plte[i + 2]
+			blue:  png.plte[i + 2]
 		}
 	}
 	return PngFile{
-		width: png.ihdr.width
-		height: png.ihdr.height
-		pixels: png.pixels
+		width:      png.ihdr.width
+		height:     png.ihdr.height
+		pixels:     png.pixels
 		pixel_type: png.pixel_type
-		ihdr: png.ihdr
-		palette: plte
+		ihdr:       png.ihdr
+		palette:    plte
 	}
 }
 
@@ -59,13 +59,13 @@ fn read_signature(signature []u8) !bool {
 
 fn read_ihdr(chunk_data []u8) IHDR {
 	return IHDR{
-		width: binary.big_endian_u32(chunk_data[..4])
-		height: binary.big_endian_u32(chunk_data[4..8])
-		bit_depth: chunk_data[8]
-		color_type: chunk_data[9]
+		width:              binary.big_endian_u32(chunk_data[..4])
+		height:             binary.big_endian_u32(chunk_data[4..8])
+		bit_depth:          chunk_data[8]
+		color_type:         chunk_data[9]
 		compression_method: chunk_data[10]
-		filter_method: chunk_data[11]
-		interlace_method: chunk_data[12]
+		filter_method:      chunk_data[11]
+		interlace_method:   chunk_data[12]
 	}
 }
 
@@ -151,16 +151,16 @@ fn read_bytes(mut png InternalPngFile) []Pixel {
 			}
 			2 { // TrueColor
 				res << TrueColor{
-					red: png.unfiltered_bytes[index]
+					red:   png.unfiltered_bytes[index]
 					green: png.unfiltered_bytes[index + 1]
-					blue: png.unfiltered_bytes[index + 2]
+					blue:  png.unfiltered_bytes[index + 2]
 				}
 			}
 			6 { // TrueColor Alpha
 				res << TrueColorAlpha{
-					red: png.unfiltered_bytes[index]
+					red:   png.unfiltered_bytes[index]
 					green: png.unfiltered_bytes[index + 1]
-					blue: png.unfiltered_bytes[index + 2]
+					blue:  png.unfiltered_bytes[index + 2]
 					alpha: png.unfiltered_bytes[index + 3]
 				}
 			}
@@ -205,7 +205,5 @@ fn read_chunks(file []u8) InternalPngFile {
 }
 
 fn decompress_idat(png InternalPngFile) []u8 {
-	return zlib.decompress(png.idat_chunks) or {
-		panic('failed to decompress IDAT chunks')
-	}
+	return zlib.decompress(png.idat_chunks) or { panic('failed to decompress IDAT chunks') }
 }

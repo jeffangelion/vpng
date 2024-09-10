@@ -54,16 +54,16 @@ fn rotate_(mut png PngFile, degree f64) {
 				match png.pixel_type {
 					.truecolor {
 						output << TrueColor{
-							red: 0
+							red:   0
 							green: 0
-							blue: 0
+							blue:  0
 						}
 					}
 					.truecoloralpha {
 						output << TrueColorAlpha{
-							red: 0
+							red:   0
 							green: 0
-							blue: 0
+							blue:  0
 							alpha: 0
 						}
 					}
@@ -144,9 +144,9 @@ fn rotate_(mut png PngFile, degree f64) {
 					}
 					else {
 						TrueColor{
-							red: 0
+							red:   0
 							green: 0
-							blue: 0
+							blue:  0
 						}
 					}
 				}

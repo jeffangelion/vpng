@@ -6,16 +6,16 @@ fn invert_(mut png PngFile) {
 		match pix {
 			TrueColor {
 				png.pixels[i] = TrueColor{
-					red: 255 - pix.red
+					red:   255 - pix.red
 					green: 255 - pix.green
-					blue: 255 - pix.blue
+					blue:  255 - pix.blue
 				}
 			}
 			TrueColorAlpha {
 				png.pixels[i] = TrueColorAlpha{
-					red: 255 - pix.red
+					red:   255 - pix.red
 					green: 255 - pix.green
-					blue: 255 - pix.blue
+					blue:  255 - pix.blue
 					alpha: pix.alpha
 				}
 			}

@@ -70,9 +70,7 @@ fn idat_chunk(mut file_bytes []u8, png PngFile) {
 		}
 	}
 
-	out := zlib.compress(idat_bytes) or {
-		panic('failed to compress IDAT chunks')
-	}
+	out := zlib.compress(idat_bytes) or { panic('failed to compress IDAT chunks') }
 	mut out_bytes := [u8(`I`), `D`, `A`, `T`]
 	out_bytes << out
 	file_bytes << binary.big_endian_get_u32(u32(out_bytes.len) - 4)
