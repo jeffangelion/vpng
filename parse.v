@@ -6,6 +6,11 @@ import encoding.binary
 
 fn parse_(filename string) !PngFile {
 	file_bytes := os.read_bytes(filename) or { return err }
+	png_file := parse2_(file_bytes) or { return err }
+	return png_file
+}
+
+fn parse2_(file_bytes []u8) !PngFile {
 	read_signature(file_bytes[..8]) or { return err }
 	mut png := read_chunks(file_bytes[8..])
 	png.channels = match png.ihdr.color_type {

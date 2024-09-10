@@ -6,6 +6,10 @@ pub fn read(filename string) !PngFile {
 	return parse_(filename)
 }
 
+pub fn read_from_array(file_bytes []u8) !PngFile {
+	return prse2_(file_bytes)
+}
+
 pub fn (png PngFile) write(filename string) {
 	write_(png, filename)
 }

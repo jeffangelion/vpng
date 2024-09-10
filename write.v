@@ -25,7 +25,7 @@ fn ihdr_chunk(mut file_bytes []u8, png PngFile) {
 	ihdr_bytes << png.ihdr.compression_method // Compression Method
 	ihdr_bytes << png.ihdr.filter_method // Filter Method
 	ihdr_bytes << png.ihdr.interlace_method // Interlace Method
-	len_bytes := binary.big_endian_get_u32(ihdr_bytes.len - 4)
+	len_bytes := binary.big_endian_get_u32(u32(ihdr_bytes.len) - 4)
 	crc_bytes := binary.big_endian_get_u32(crc32.sum(ihdr_bytes))
 	file_bytes << len_bytes
 	file_bytes << ihdr_bytes
@@ -70,7 +70,7 @@ fn idat_chunk(mut file_bytes []u8, png PngFile) {
 	}
 	mut out_bytes := [u8(`I`), `D`, `A`, `T`]
 	out_bytes << out
-	file_bytes << binary.big_endian_get_u32(out_bytes.len - 4)
+	file_bytes << binary.big_endian_get_u32(u32(out_bytes.len) - 4)
 	file_bytes << out_bytes
 	file_bytes << binary.big_endian_get_u32(crc32.sum(out_bytes))
 }
@@ -85,7 +85,7 @@ fn plte_chunk(mut file_bytes []u8, png PngFile) {
 		out_bytes << [png.palette[i].green]
 		out_bytes << [png.palette[i].blue]
 	}
-	file_bytes << binary.big_endian_get_u32(out_bytes.len - 4)
+	file_bytes << binary.big_endian_get_u32(u32(out_bytes.len) - 4)
 	file_bytes << out_bytes
 	file_bytes << binary.big_endian_get_u32(crc32.sum(out_bytes))
 }
