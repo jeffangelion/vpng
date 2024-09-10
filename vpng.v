@@ -7,11 +7,15 @@ pub fn read(filename string) !PngFile {
 }
 
 pub fn read_from_array(file_bytes []u8) !PngFile {
-	return prse2_(file_bytes)
+	return parse2_(file_bytes)
 }
 
 pub fn (png PngFile) write(filename string) {
 	write_(png, filename)
+}
+
+pub fn (png PngFile) write_to_array() []u8 {
+	return write2_(png)
 }
 
 pub fn (mut png PngFile) rotate(degree f64) {

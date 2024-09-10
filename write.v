@@ -6,10 +6,15 @@ import hash.crc32
 import encoding.binary
 
 fn write_(png PngFile, filename string) {
+	file_bytes := write2_(png)
+	os.write_file(filename, file_bytes.bytestr()) or { println('Error writing file ${err}') }
+}
+
+fn write2_(png PngFile) []u8 {
 	mut file_bytes := []u8{}
 	signature(mut file_bytes)
 	write_chunks(mut file_bytes, png)
-	os.write_file(filename, file_bytes.bytestr()) or { println('Error writing file ${err}') }
+	return file_bytes
 }
 
 fn signature(mut file_bytes []u8) {
