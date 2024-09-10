@@ -13,8 +13,8 @@ pub type Pixel = Grayscale | GrayscaleAlpha | Indexed | TrueColor | TrueColorAlp
 pub struct PngFile {
 	ihdr IHDR
 pub:
-	width      int
-	height     int
+	width      u32
+	height     u32
 	pixel_type PixelType
 pub mut:
 	palette []TrueColor
@@ -36,8 +36,8 @@ mut:
 
 pub struct IHDR {
 mut:
-	width              int
-	height             int
+	width              u32
+	height             u32
 	bit_depth          u8
 	color_type         u8
 	compression_method u8

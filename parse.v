@@ -2,6 +2,7 @@ module vpng
 
 import os
 import compress.zlib
+import encoding.binary
 
 fn parse_(filename string) !PngFile {
 	file_bytes := os.read_bytes(filename) or { return err }
@@ -53,8 +54,10 @@ fn read_signature(signature []u8) !bool {
 
 fn read_ihdr(chunk_data []u8) IHDR {
 	return IHDR{
-		width: byte_to_int(chunk_data[..4])
-		height: byte_to_int(chunk_data[4..8])
+		// width: byte_to_int(chunk_data[..4])
+		// height: byte_to_int(chunk_data[4..8])
+		width: binary.big_endian_u32(chunk_data[..4])
+		height: binary.big_endian_u32(chunk_data[4..8])
 		bit_depth: chunk_data[8]
 		color_type: chunk_data[9]
 		compression_method: chunk_data[10]
@@ -168,7 +171,8 @@ fn read_chunks(file []u8) InternalPngFile {
 	mut index := 0
 	mut png := InternalPngFile{}
 	for index < file.len {
-		chunk_size := byte_to_int(file[index..index + 4])
+		// chunk_size := byte_to_int(file[index..index + 4])
+		chunk_size := binary.big_endian_u32(file[index..index + 4])
 		index += 4
 		name := file[index..index + 4].bytestr()
 		if name == 'IEND' {
